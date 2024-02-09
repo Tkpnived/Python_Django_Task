@@ -1,4 +1,5 @@
-
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 
 from .models import RegisterDB
 from django.shortcuts import render, redirect
@@ -13,6 +14,13 @@ def Register(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         confirm_password = request.POST.get('password2')
+
+        try:
+            validate_email(email)
+        except ValidationError:
+            messages.error(request, 'Invalid email format. Please enter a valid email address.')
+            return render(request, 'register.html', {'username': username, 'email': email})
+
 
 
         if not (len(password) >= 8 and any(char.isupper() for char in password) and any(char in '!@#$%^&*()-_=+' for char in password)):
