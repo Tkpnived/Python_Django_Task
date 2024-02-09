@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1em;
+            text-align: center;
+        }
+
+        section {
+            max-width: 600px;
+            height:400px;
+            margin: 2em auto;
+            padding: 1em;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        img {
+            border-radius: 50%;
+            max-width: 150px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin: 0;
+        }
+                button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>User Profile</h1>
+    </header>
+
+    <section>
+        {% if request.session.email and datas %}
+<img src="https://toppng.com/uploads/preview/cool-avatar-transparent-image-cool-boy-avatar-11562893383qsirclznyw.png" alt="Cartoon Avatar" style="border-radius: 50%; width: 100px; height: 100px;">
+
+
+
+        <h2>Username: <span id="username">{{datas.username}}</span></h2>
+        <p>Email: <span id="email">{{request.session.email}}</span></p>
+        <br>
+        <form method="get" action="{% url 'edit' %}">
+        <button>Reset Password</button>
+            </form>
+        <br>
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+        <button type="submit">Logout</button>
+        </form>
+        {% endif %}
+    </section>
+{% if messages %}
+  <script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+      {% for message in messages %}
+        {% if message.tags == 'success' %}
+          setTimeout(function() {
+            alert("{{ message }}");
+          }, 100);
+        {% elif message.tags == 'error' %}
+          setTimeout(function() {
+            alert("{{ message }}");
+          }, 100);
+        {% else %}
+          setTimeout(function() {
+            alert("{{ message }}");
+          }, 100);
+        {% endif %}
+      {% endfor %}
+    });
+  </script>
+{% endif %}
+
+</body>
+
+</html>
