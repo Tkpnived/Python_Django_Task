@@ -15,6 +15,13 @@ def Register(request):
         password = request.POST.get('password')
         confirm_password = request.POST.get('password2')
 
+        try:
+            validate_email(email)
+        except ValidationError:
+            messages.error(request, 'Invalid email format. Please enter a valid email address.')
+            return render(request, 'register.html', {'username': username, 'email': email})
+
+
 
         if not (len(password) >= 8 and any(char.isupper() for char in password) and any(char in '!@#$%^&*()-_=+' for char in password)):
             messages.error(request, 'Password must be at least 8 characters with 1 uppercase letter and 1 special character.')
