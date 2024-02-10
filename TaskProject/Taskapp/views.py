@@ -51,7 +51,7 @@ def Register(request):
         to_email = [email]
         send_mail(subject, message, from_email, to_email, fail_silently=False)
 
-        messages.success(request, 'User registered successfully! Confirmation email sent.')
+        messages.success(request, 'User Task Account registered successfully! Confirmation email sent.')
         return redirect(loginpage)
 
     return render(request, 'register.html')
@@ -113,7 +113,7 @@ def updatepassword(request):
                 RegisterDB.objects.filter(email=username).update(password=password, confirm_password=confirm_password)
 
                 subject = 'Password Update'
-                message = f' {username}! Your account Password Changed.'
+                message = f' {username}! Your Task account Password Changed.'
                 from_email = settings.DEFAULT_FROM_EMAIL
                 to_email = [username]
                 send_mail(subject, message, from_email, to_email, fail_silently=False)
